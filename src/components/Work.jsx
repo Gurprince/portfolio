@@ -84,8 +84,8 @@ export default function Work() {
   return (
     <section className="work" id="work" ref={root}>
       <div className="section-head">
-        <Reveal as="h2" className="section-title">Selected work</Reveal>
-        <Reveal as="p" className="section-sub" delay={0.1}>Products, a patent, and sites clients use to find customers.</Reveal>
+        <Reveal as="h2" className="section-title">Projects</Reveal>
+        <Reveal as="p" className="section-sub" delay={0.1}>Products I built on my own, a granted patent, and sites clients use to find customers.</Reveal>
       </div>
 
       <div className="stack" ref={stack} onScroll={onStackScroll}>
@@ -96,6 +96,11 @@ export default function Work() {
               <h3 className="card__title">{p.name}</h3>
               <p className="card__desc">{p.desc}</p>
               <ul className="chips">{p.tags.map((t) => <li key={t}>{t}</li>)}</ul>
+              {p.repo && (
+                <a className="card__link" href={p.repo} target="_blank" rel="noopener noreferrer" data-cursor="Code">
+                  View code on GitHub
+                </a>
+              )}
             </div>
             {p.image ? (
               <div className="card__shot" style={p.ratio ? { aspectRatio: p.ratio } : undefined}>

@@ -1,42 +1,35 @@
+import { Route, Routes } from 'react-router-dom';
 import useLenis from './hooks/useLenis';
 import Cursor from './components/Cursor';
 import Grain from './components/Grain';
 import Nav from './components/Nav';
-import Hero from './components/Hero';
-import Numbers from './components/Numbers';
-import Marquee from './components/Marquee';
-import Reveal from './components/Reveal';
-import Work from './components/Work';
-import Experience from './components/Experience';
-import { Skills, Credentials } from './components/Skills';
 import Contact from './components/Contact';
 import { EmailProvider } from './components/EmailDialog';
+import PageTransition from './components/PageTransition';
+import Home from './pages/Home';
+import About from './pages/About';
+import CaseStudy from './pages/CaseStudy';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   useLenis();
 
   return (
-    <EmailProvider>
-      <Cursor />
-      <Grain />
-      <Nav />
-      <main>
-        <Hero />
-        <Numbers />
-        <Marquee />
-        <section className="about">
-          <Reveal as="p" className="about__text">
-            I work across the whole stack: the calculation logic nobody sees, the interface everybody does, and the cloud
-            flows that move files around while people sleep. Clients notice when a report that took a day now takes
-            seconds, so that's the kind of problem I go looking for.
-          </Reveal>
-        </section>
-        <Work />
-        <Experience />
-        <Skills />
-        <Credentials />
-      </main>
-      <Contact />
-    </EmailProvider>
+    <PageTransition>
+      <EmailProvider>
+        <Cursor />
+        <Grain />
+        <Nav />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/work/:slug" element={<CaseStudy />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Contact />
+      </EmailProvider>
+    </PageTransition>
   );
 }

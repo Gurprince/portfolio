@@ -1,10 +1,12 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import Reveal from './Reveal';
-import { roles } from '../data/resume';
+import { roles, caseBySlug } from '../data/resume';
+import usePageTransition from '../hooks/usePageTransition';
 
 function Role({ role, open, onToggle }) {
   const body = useRef(null);
+  const go = usePageTransition();
   const first = useRef(true);
 
   /* animate height between closed and open; skip on first render */
@@ -39,6 +41,19 @@ function Role({ role, open, onToggle }) {
       </button>
       <ul className="role__points" id={id} ref={body}>
         {role.points.map((p) => <li key={p}>{p}</li>)}
+        {role.cases && (
+          <li className="role__cases">
+            Case studies:{' '}
+            {role.cases.map((slug, i) => (
+              <span key={slug}>
+                {i > 0 && ', '}
+                <a href={`/work/${slug}`} onClick={(e) => { e.preventDefault(); go(`/work/${slug}`); }}>
+                  {caseBySlug(slug).client === 'Penthara Technologies' ? 'internal app' : caseBySlug(slug).client}
+                </a>
+              </span>
+            ))}
+          </li>
+        )}
       </ul>
     </div>
   );

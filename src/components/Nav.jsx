@@ -1,30 +1,27 @@
 import RollText from './RollText';
 import useClock from '../hooks/useClock';
+import usePageTransition from '../hooks/usePageTransition';
 import { scrollToTarget } from '../hooks/useLenis';
-
-const LINKS = [
-  ['#work', 'Work'],
-  ['#experience', 'Experience'],
-  ['#skills', 'Skills'],
-  ['#contact', 'Contact'],
-];
 
 export default function Nav() {
   const time = useClock();
+  const go = usePageTransition();
 
-  const go = (e, href) => {
-    e.preventDefault();
-    scrollToTarget(href === '#top' ? 0 : href);
-  };
+  /* [label, href, what the click does] — Contact is the footer, on every page */
+  const links = [
+    ['Work', '/#cases', () => go('/', { scrollTo: '#cases' })],
+    ['About', '/about', () => go('/about')],
+    ['Contact', '#contact', () => scrollToTarget('#contact')],
+  ];
 
   return (
     <header className="nav">
-      <a className="nav__mark roll-host" href="#top" aria-label="Back to top" onClick={(e) => go(e, '#top')}>
+      <a className="nav__mark roll-host" href="/" aria-label="Home" onClick={(e) => { e.preventDefault(); go('/'); }}>
         <RollText>GS</RollText>
       </a>
-      <nav className="nav__links" aria-label="Sections">
-        {LINKS.map(([href, label]) => (
-          <a key={href} className="roll-host" href={href} onClick={(e) => go(e, href)}>
+      <nav className="nav__links" aria-label="Main">
+        {links.map(([label, href, onGo]) => (
+          <a key={label} className="roll-host" href={href} onClick={(e) => { e.preventDefault(); onGo(); }}>
             <RollText>{label}</RollText>
           </a>
         ))}

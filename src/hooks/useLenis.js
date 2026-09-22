@@ -8,14 +8,20 @@ gsap.registerPlugin(ScrollTrigger);
 let instance = null;
 
 /** Scroll smoothly to an element, selector or offset; falls back to native. */
-export function scrollToTarget(target) {
+export function scrollToTarget(target, { immediate = false } = {}) {
   if (instance) {
-    instance.scrollTo(target, { duration: 1.4 });
+    instance.scrollTo(target, immediate ? { immediate: true, force: true } : { duration: 1.4 });
     return;
   }
   const el = typeof target === 'string' ? document.querySelector(target) : target;
   if (el?.scrollIntoView) el.scrollIntoView({ behavior: 'smooth' });
   else window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/** Jumps straight to the top of the page (used on route change). */
+export function scrollToTop() {
+  instance?.scrollTo(0, { immediate: true, force: true });
+  window.scrollTo(0, 0);
 }
 
 /** Pauses smooth scrolling while a modal is open. */

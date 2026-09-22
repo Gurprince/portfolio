@@ -2,18 +2,10 @@ import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import useMagnetic from '../hooks/useMagnetic';
 import useEmailDialog from '../hooks/useEmailDialog';
+import ResultsReel from './ResultsReel';
 import { contact } from '../data/resume';
 
-/* the profile card, as tokens so each piece gets its own syntax colour */
-const CODE = [
-  [['kw', 'const '], ['id', 'gurprince'], ['p', ' = {']],
-  [['p', '  '], ['key', 'role'], ['p', ': '], ['str', "'Full Stack Developer'"], ['p', ',']],
-  [['p', '  '], ['key', 'at'], ['p', ': '], ['str', "'CFZ Technologies'"], ['p', ',']],
-  [['p', '  '], ['key', 'based'], ['p', ': '], ['str', "'Mohali, Punjab'"], ['p', ',']],
-  [['p', '  '], ['key', 'stack'], ['p', ': ['], ['str', "'React'"], ['p', ', '], ['str', "'NestJS'"], ['p', ', '], ['str', "'Azure'"], ['p', '],']],
-  [['p', '  '], ['key', 'shippedFor'], ['p', ': '], ['num', '4'], ['p', ', '], ['cm', '// companies since 2024']],
-  [['p', '};']],
-];
+let introPlayed = false;
 
 const Chars = ({ word }) =>
   [...word].map((c, i) => (
@@ -45,18 +37,26 @@ export default function Hero() {
     return () => window.removeEventListener('resize', fit);
   }, []);
 
-  /* intro: veil lifts, letters blur-rise, then the profile types itself out */
+  /* intro: veil lifts, letters blur-rise, then the rest of the hero settles in */
   useLayoutEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
+    if (introPlayed) {
+      gsap.set('.veil', { autoAlpha: 0 });
+      const ctx = gsap.context(() => {
+        gsap.fromTo('.hero__char',
+          { autoAlpha: 0, yPercent: 30, filter: 'blur(10px)' },
+          { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 1, ease: 'expo.out', stagger: 0.03, delay: 0.5 });
+      }, root);
+      return () => ctx.revert();
+    }
     const ctx = gsap.context(() => {
-      gsap.timeline({ delay: 0.1 })
+      gsap.timeline({ delay: 0.1, onComplete: () => { introPlayed = true; } })
         .to('.veil', { autoAlpha: 0, duration: 0.9, ease: 'power2.out' })
         .fromTo('.hero__char',
           { autoAlpha: 0, yPercent: 40, filter: 'blur(14px)' },
           { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out', stagger: 0.045 }, 0.3)
-        .fromTo(['.hero__foot', document.querySelector('.nav')], { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'expo.out' }, '-=0.6')
-        .fromTo('.code__ch', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, stagger: 0.018, ease: 'none' }, '-=0.3');
+        .fromTo(['.hero__foot', document.querySelector('.nav')], { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'expo.out' }, '-=0.6');
     }, root);
     return () => ctx.revert();
   }, []);
@@ -81,22 +81,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <figure className="code" aria-label="Full Stack Developer at CFZ Technologies in Mohali, Punjab, working with React, NestJS and Azure">
-          <figcaption className="code__tab">gurprince.js</figcaption>
-          <pre className="code__body" aria-hidden="true">
-            {CODE.map((line, li) => (
-              <span className="code__line" key={li}>
-                <span className="code__num">{li + 1}</span>
-                {line.map(([kind, text], ti) => (
-                  <span className={`tok tok--${kind}`} key={ti}>
-                    {[...text].map((c, ci) => <span className="code__ch" key={ci}>{c}</span>)}
-                  </span>
-                ))}
-                {li === CODE.length - 1 && <span className="code__caret" />}
-              </span>
-            ))}
-          </pre>
-        </figure>
+        <ResultsReel />
       </div>
     </section>
   );

@@ -42,11 +42,58 @@ export const contact = {
 };
 
 export const numbers = [
-  { value: 99.99, decimals: 2, suffix: '%', label: 'faster report generation for a client' },
   { value: 180, suffix: '+', label: 'developers trained in a 2-day React workshop' },
-  { value: 1, label: 'granted patent for an IoT notice board' },
-  { value: 4, label: 'companies shipped for since 2024' },
+  { value: 1, label: 'granted patent, for an IoT notice board' },
+  { value: 3, label: 'client websites built and deployed' },
 ];
+
+/* client work, told from the résumé: problem, what I built, result */
+export const cases = [
+  {
+    slug: 'healthicity',
+    metric: '24h → 7s',
+    metricLabel: 'Healthicity report generation, rebuilt',
+    client: 'Healthicity',
+    via: 'Penthara Technologies',
+    title: 'A day-long report, down to seconds',
+    diagram: 'bars',
+    problem: 'Healthicity’s data reports took up to 24 hours to generate, so decisions waited a full day on the numbers.',
+    built: 'I engineered a new reporting feature in React and PHP to replace the day-long generation step.',
+    result: 'Reports now come back in 3–7 seconds, about 99.99% faster, and decisions no longer wait on the data.',
+    stack: ['React.js', 'PHP'],
+  },
+  {
+    slug: 'standish',
+    metric: '0',
+    metricLabel: 'manual document uploads left for Standish',
+    client: 'Standish',
+    via: 'Penthara Technologies',
+    title: 'No more manual uploads',
+    diagram: 'flow',
+    problem: 'Documents reached Azure Blob Storage by hand, and SharePoint files had to be moved over manually.',
+    built: 'I designed and deployed Azure Logic App and Power Automate flows that pick up SharePoint files and file them into Blob Storage, in a structured, client-named folder layout.',
+    result: 'Manual uploads dropped to zero, and every file lands where the team expects it.',
+    stack: ['Logic Apps', 'Power Automate', 'SharePoint'],
+  },
+  {
+    slug: 'penthara',
+    metric: '1 app',
+    metricLabel: 'for HR, Teams and AI search at Penthara',
+    client: 'Penthara Technologies',
+    via: 'internal product',
+    title: 'One app for the whole team, with AI built in',
+    diagram: 'system',
+    problem: 'The company needed one internal tool for HR and day-to-day team operations.',
+    built: 'I built it end to end in React and NestJS, with multi-tenant architecture, Microsoft Teams integration and automated email workflows. Then I added AI: semantic search on a vector database, and custom MCP servers for context-aware features.',
+    result: 'Company-wide HR and team operations now run through a single app, with AI search inside it.',
+    stack: ['React.js', 'NestJS', 'Vector search', 'MCP servers', 'Teams'],
+  },
+];
+
+/* rotating results in the hero; each one opens its case study */
+export const results = cases.map((c) => ({ metric: c.metric, label: c.metricLabel, slug: c.slug }));
+
+export const caseBySlug = (slug) => cases.find((c) => c.slug === slug);
 
 /* one logo per tech name, shared by the marquee and the skill chips */
 const logos = {
@@ -72,6 +119,7 @@ export const projects = [
     kind: 'AI learning platform',
     tone: 'graphite',
     image: skillmentorShot,
+    repo: 'https://github.com/Gurprince/Skill-Mentor',
     ratio: '2 / 1',
     desc: 'Pick a target role, like Frontend Developer or DevOps Engineer, and get a personalised roadmap with curated resources, tasks and milestones. AI reviews each finished task, gives feedback and adjusts the path.',
     tags: ['React.js', 'Node.js', 'MongoDB', 'REST APIs', 'AI'],
@@ -81,6 +129,7 @@ export const projects = [
     kind: 'Developer productivity',
     tone: 'accent',
     image: devdeckShot,
+    repo: 'https://github.com/Gurprince/dev-deck',
     ratio: '2 / 1',
     desc: 'One workspace in place of five tools: a Kanban board, a searchable snippet library, docs with version history, custom dashboards and live notifications. Owner, Editor and Viewer roles keep team data safe.',
     tags: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'RBAC'],
@@ -98,6 +147,7 @@ export const projects = [
     kind: 'AI recommendations',
     tone: 'deep',
     image: skillsyncShot,
+    repo: 'https://github.com/Gurprince/Ai-TaskRecommend',
     desc: "A productivity app that suggests tasks based on each person's skills. The recommendation engine made people more likely to finish the tasks they started.",
     tags: ['React.js', 'Node.js', 'MongoDB', 'REST APIs'],
   },
@@ -123,6 +173,7 @@ export const roles = [
     when: 'Oct 2025 – Jun 2026',
     title: 'Software Developer Intern',
     org: 'Penthara Technologies, Mohali',
+    cases: ['healthicity', 'standish', 'penthara'],
     points: [
       'Rebuilt a React + PHP reporting feature for Healthicity: generation went from 24 hours to 3–7 seconds.',
       'Built Azure Logic Apps and Power Automate flows for Standish that removed manual uploads to Blob Storage and filed SharePoint documents into client-named folders automatically.',
