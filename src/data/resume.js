@@ -1,14 +1,31 @@
 import react from '../assets/logos/react.webp';
-import node from '../assets/logos/node.webp';
-import express from '../assets/logos/express.webp';
+import node from '../assets/logos/nodejs.svg';
+import express from '../assets/logos/express.svg';
 import mongodb from '../assets/logos/mongodb.webp';
-import mysql from '../assets/logos/mysql.webp';
+import mysql from '../assets/logos/mysql.svg';
 import javascript from '../assets/logos/javascript.webp';
 import css from '../assets/logos/css.webp';
-import tailwind from '../assets/logos/tailwind.webp';
+import tailwind from '../assets/logos/tailwindcss.svg';
 import wordpress from '../assets/logos/wordpress.webp';
 import python from '../assets/logos/python.webp';
 import cpp from '../assets/logos/cpp.webp';
+import typescript from '../assets/logos/typescript.svg';
+import html5 from '../assets/logos/html5.svg';
+import sass from '../assets/logos/sass.svg';
+import nestjs from '../assets/logos/nestjs.svg';
+import php from '../assets/logos/php.svg';
+import linux from '../assets/logos/linux.svg';
+import mcp from '../assets/logos/mcp.svg';
+import firebase from '../assets/logos/firebase.svg';
+import vector from '../assets/logos/vector.svg';
+import azure from '../assets/logos/azure.svg';
+import azurefunctions from '../assets/logos/azurefunctions.svg';
+import powerapps from '../assets/logos/powerapps.svg';
+import powerautomate from '../assets/logos/powerautomate.svg';
+import sharepoint from '../assets/logos/sharepoint.svg';
+import teams from '../assets/logos/teams.svg';
+import git from '../assets/logos/git.svg';
+import github from '../assets/logos/github.svg';
 import skillsyncShot from '../assets/projects/skillsync.webp';
 import lensfillersShot from '../assets/projects/lensfillers.webp';
 import skillmentorShot from '../assets/projects/skillmentor.webp';
@@ -31,24 +48,23 @@ export const numbers = [
   { value: 4, label: 'companies shipped for since 2024' },
 ];
 
+/* one logo per tech name, shared by the marquee and the skill chips */
+const logos = {
+  'React.js': react, TypeScript: typescript, JavaScript: javascript, HTML5: html5, CSS3: css,
+  'Tailwind CSS': tailwind, SCSS: sass,
+  'Node.js': node, 'Express.js': express, NestJS: nestjs, PHP: php, LAMP: linux, 'MCP servers': mcp,
+  MongoDB: mongodb, MySQL: mysql, Firebase: firebase, 'Vector search': vector,
+  'Logic Apps': azure, 'Azure Logic Apps': azure, 'Function Apps': azurefunctions, 'Power Apps': powerapps,
+  'Power Automate': powerautomate, SharePoint: sharepoint, SPFx: sharepoint, Teams: teams,
+  Python: python, 'C++': cpp, WordPress: wordpress, Git: git, GitHub: github,
+};
+
+export const logoFor = (name) => logos[name];
+
 export const stack = [
-  { name: 'React.js', logo: react },
-  { name: 'NestJS' },
-  { name: 'Node.js', logo: node },
-  { name: 'Express.js', logo: express },
-  { name: 'PHP' },
-  { name: 'JavaScript', logo: javascript },
-  { name: 'Azure Logic Apps' },
-  { name: 'Power Automate' },
-  { name: 'MongoDB', logo: mongodb },
-  { name: 'MySQL', logo: mysql },
-  { name: 'MCP servers' },
-  { name: 'Tailwind CSS', logo: tailwind },
-  { name: 'CSS3', logo: css },
-  { name: 'WordPress', logo: wordpress },
-  { name: 'Python', logo: python },
-  { name: 'C++', logo: cpp },
-];
+  'React.js', 'NestJS', 'Node.js', 'Express.js', 'PHP', 'JavaScript', 'Azure Logic Apps', 'Power Automate',
+  'MongoDB', 'MySQL', 'MCP servers', 'Tailwind CSS', 'CSS3', 'WordPress', 'Python', 'C++',
+].map((name) => ({ name, logo: logos[name] }));
 
 export const projects = [
   {
@@ -130,23 +146,77 @@ export const roles = [
   },
 ];
 
+/* `used` says where each skill shows up in real work, straight from the résumé */
 export const skills = [
-  { group: 'Frontend', items: 'React.js, TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, SCSS' },
-  { group: 'Backend', items: 'Node.js, Express.js, NestJS, PHP, LAMP, MCP server development' },
-  { group: 'Data', items: 'MongoDB, MySQL, Firebase, vector databases for semantic search' },
-  { group: 'Microsoft & Azure', items: 'Logic Apps, Function Apps, Power Apps, Power Automate, SharePoint, SPFx, Teams integration' },
-  { group: 'Languages', items: 'Python, C++' },
-  { group: 'Tools', items: 'WordPress, Git, GitHub' },
+  {
+    group: 'Frontend',
+    items: [
+      { name: 'React.js', used: 'SkillMentor, DevDeck and SkillSync, plus the Healthicity reporting feature that went from 24 hours to 3–7 seconds.' },
+      { name: 'TypeScript', used: 'NestJS services behind Penthara’s internal employee management app.' },
+      { name: 'JavaScript', used: 'My everyday language across React and Node, since my first internship at Speedum Technology.' },
+      { name: 'HTML5', used: 'Every interface I ship, starting with web apps at Speedum Technology.' },
+      { name: 'CSS3', used: 'Responsive, user-facing interfaces for new product features at CFZ Technologies.' },
+      { name: 'Tailwind CSS', used: 'Utility-first styling for fast, consistent React interfaces.' },
+      { name: 'SCSS', used: 'Structured, reusable stylesheets for larger interfaces.' },
+    ],
+  },
+  {
+    group: 'Backend',
+    items: [
+      { name: 'Node.js', used: 'Back ends for SkillMentor, DevDeck and SkillSync, and the Indy Truck and LensFillers client sites.' },
+      { name: 'Express.js', used: 'DevDeck’s API, with Owner, Editor and Viewer access control.' },
+      { name: 'NestJS', used: 'Penthara’s internal employee app: multi-tenant, with Teams integration, automated emails and AI search.' },
+      { name: 'PHP', used: 'The Healthicity reporting feature, rebuilt from 24 hours down to 3–7 seconds, and a React + PHP client platform.' },
+      { name: 'LAMP', used: 'Running and extending PHP client platforms at Penthara.' },
+      { name: 'MCP servers', used: 'Custom Model Context Protocol servers that power context-aware AI features at Penthara.' },
+    ],
+  },
+  {
+    group: 'Data',
+    items: [
+      { name: 'MongoDB', used: 'The data layer for SkillMentor, DevDeck and SkillSync.' },
+      { name: 'MySQL', used: 'The relational side of LAMP, behind PHP client platforms.' },
+      { name: 'Firebase', used: 'Indy Truck & Trailer Repair and LensFillers, both live today.' },
+      { name: 'Vector search', used: 'Semantic search inside Penthara’s NestJS app, built on a vector database.' },
+    ],
+  },
+  {
+    group: 'Microsoft & Azure',
+    items: [
+      { name: 'Logic Apps', used: 'Flows for Standish that removed manual document uploads to Azure Blob Storage entirely.' },
+      { name: 'Function Apps', used: 'Serverless tasks alongside Logic App and Power Automate flows.' },
+      { name: 'Power Apps', used: 'SharePoint-connected apps built at Penthara.' },
+      { name: 'Power Automate', used: 'Standish’s SharePoint-to-Blob pipeline and automated email-attachment handling.' },
+      { name: 'SharePoint', used: 'Automatic file ingestion into client-named Blob Storage folders.' },
+      { name: 'SPFx', used: 'SharePoint Framework web parts and extensions.' },
+      { name: 'Teams', used: 'Teams integration in Penthara’s internal employee management app.' },
+    ],
+  },
+  {
+    group: 'Languages',
+    items: [
+      { name: 'Python', used: 'Scripting, automation and problem solving.' },
+      { name: 'C++', used: 'Data structures and algorithms, from my B.Tech coursework onward.' },
+    ],
+  },
+  {
+    group: 'Tools',
+    items: [
+      { name: 'WordPress', used: 'A client website built and deployed at Penthara.' },
+      { name: 'Git', used: 'Version control on every project.' },
+      { name: 'GitHub', used: 'Where my code lives: github.com/Gurprince.' },
+    ],
+  },
 ];
 
 export const education = [
-  { title: 'B.Tech, Computer Science & Engineering', where: 'GNA University, Phagwara, 2022–2026', note: 'Full stack development, data structures & algorithms, web technologies.' },
-  { title: 'Senior Secondary (CBSE)', where: 'Akal Academy Tibber, 2021–2022', note: '86%, second in school.' },
+  { years: ['2022', '26'], title: 'B.Tech, Computer Science & Engineering', where: 'GNA University, Phagwara', note: 'Full stack development, data structures & algorithms, web technologies.' },
+  { years: ['2021', '22'], title: 'Senior Secondary (CBSE)', where: 'Akal Academy Tibber', note: '86%, second in school.' },
 ];
 
 export const recognition = [
-  '2nd place, inter-college web design competition',
-  'Ran a 2-day React.js workshop for 180+ participants: components, state and hooks',
-  'Built an AI tutor suite in 28 hours with a 5-person team at GNA Hackathon',
-  'Coordinated Coding Mania and several gaming events',
+  { figure: '2nd', text: 'Place in an inter-college web design competition' },
+  { figure: '180+', text: 'Participants in a 2-day React.js workshop I ran on components, state and hooks' },
+  { figure: '28h', text: 'To build an AI tutor suite with a 5-person team at GNA Hackathon' },
+  { figure: 'Lead', text: 'Coordinator for Coding Mania and several gaming events' },
 ];
