@@ -64,6 +64,11 @@ export default function CaseStudy() {
           <span className="study__metric-value">{c.metric}</span>
           <span className="study__metric-label">{c.metricLabel}</span>
         </Reveal>
+        {c.live && (
+          <a className="study__live" href={c.live.url} target="_blank" rel="noopener noreferrer" data-cursor="Visit">
+            Visit {c.live.label}
+          </a>
+        )}
       </header>
 
       <div className="study__visual"><Diagram /></div>
@@ -73,6 +78,20 @@ export default function CaseStudy() {
         <div><dt>What I built</dt><dd>{c.built}</dd></div>
         <div className="study__result"><dt>Result</dt><dd>{c.result}</dd></div>
       </Reveal>
+
+      {c.features && (
+        <section className="study__features">
+          <Reveal as="h2" className="study__features-title">What's inside</Reveal>
+          <Reveal as="ul" className="study__features-grid" stagger={0.06}>
+            {c.features.map((f) => (
+              <li key={f.name}>
+                <h3>{f.name}</h3>
+                <p>{f.text}</p>
+              </li>
+            ))}
+          </Reveal>
+        </section>
+      )}
 
       <Reveal className="study__stack-wrap">
         <h2 className="study__stack-title">Built with</h2>
