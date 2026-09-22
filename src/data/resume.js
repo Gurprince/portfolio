@@ -96,8 +96,7 @@ export const cases = [
       { name: 'Risk reports', text: 'Track and surface project risks for managers.' },
       { name: 'Teams, email and AI search', text: 'Microsoft Teams integration, automated emails, and semantic search built on a vector database.' },
     ],
-    // public link: set once Penthara confirms it can be shared, e.g. { label: 'the app', url: 'https://...' }
-    live: null,
+    live: { label: 'Voyager', url: 'https://voyager.penthara.com' },
     stack: ['React.js', 'NestJS', 'Vector search', 'MCP servers', 'Teams'],
   },
 ];
