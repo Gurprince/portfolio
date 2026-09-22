@@ -116,9 +116,10 @@ story.append(entry('Software Developer Intern, Penthara Technologies', 'Mohali &
     '(~99.99% faster) for client Healthicity.',
     'Designed and deployed Azure Logic Apps and Power Automate flows that <b>eliminated manual document uploads</b> for '
     'client Standish, filing SharePoint files into Azure Blob Storage in a client-named folder structure.',
-    'Built a <b>multi-tenant workforce platform</b> in React and NestJS covering workspaces, projects with tasks and subtasks, '
-    'timesheets, leave, employee capacity tracking, and RAG and risk reports, with Teams integration and automated emails.',
-    'Added AI features to the platform: semantic search on a vector database and custom MCP (Model Context Protocol) servers.',
+    'Built <b>' + link('https://voyager.penthara.com', 'Voyager') + '</b> (voyager.penthara.com), a multi-tenant workforce '
+    'platform in React and NestJS: workspaces, projects with tasks and subtasks, timesheets, leave, employee capacity '
+    'tracking, and RAG and risk reports, with Teams integration and automated emails.',
+    'Added AI features to Voyager: semantic search on a vector database and custom MCP (Model Context Protocol) servers.',
     'Delivered Power Apps on SharePoint, email-attachment automation flows, a client WordPress site, and new features on a '
     'React + PHP client platform.',
 ]))

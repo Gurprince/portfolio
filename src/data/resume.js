@@ -79,8 +79,8 @@ export const cases = [
     slug: 'penthara',
     metric: '1 platform',
     metricLabel: 'for leave, timesheets, projects and reporting at Penthara',
-    client: 'Penthara Technologies',
-    via: 'internal product',
+    client: 'Voyager',
+    via: 'Penthara Technologies',
     title: 'One workspace for projects, people and time',
     diagram: 'system',
     problem: 'Penthara needed one internal tool for HR and day-to-day team operations: managing leave and timesheets, running projects, and seeing who is working on what.',
@@ -214,7 +214,7 @@ export const skills = [
     group: 'Frontend',
     items: [
       { name: 'React.js', used: 'SkillMentor, DevDeck and SkillSync, plus the Healthicity reporting feature that went from 24 hours to 3–7 seconds.' },
-      { name: 'TypeScript', used: 'NestJS services behind Penthara’s internal workforce platform.' },
+      { name: 'TypeScript', used: 'NestJS services behind Voyager, Penthara’s workforce platform.' },
       { name: 'JavaScript', used: 'My everyday language across React and Node, since my first internship at Speedum Technology.' },
       { name: 'HTML5', used: 'Every interface I ship, starting with web apps at Speedum Technology.' },
       { name: 'CSS3', used: 'Responsive, user-facing interfaces for new product features at CFZ Technologies.' },
@@ -227,7 +227,7 @@ export const skills = [
     items: [
       { name: 'Node.js', used: 'Back ends for SkillMentor, DevDeck and SkillSync, and the Indy Truck and LensFillers client sites.' },
       { name: 'Express.js', used: 'DevDeck’s API, with Owner, Editor and Viewer access control.' },
-      { name: 'NestJS', used: 'Penthara’s internal workforce platform: multi-tenant workspaces, projects, timesheets, leave, RAG and risk reports.' },
+      { name: 'NestJS', used: 'Voyager, Penthara’s workforce platform: multi-tenant workspaces, projects, timesheets, leave, RAG and risk reports.' },
       { name: 'PHP', used: 'The Healthicity reporting feature, rebuilt from 24 hours down to 3–7 seconds, and a React + PHP client platform.' },
       { name: 'LAMP', used: 'Running and extending PHP client platforms at Penthara.' },
       { name: 'MCP servers', used: 'Custom Model Context Protocol servers that power context-aware AI features at Penthara.' },
@@ -251,7 +251,7 @@ export const skills = [
       { name: 'Power Automate', used: 'Standish’s SharePoint-to-Blob pipeline and automated email-attachment handling.' },
       { name: 'SharePoint', used: 'Automatic file ingestion into client-named Blob Storage folders.' },
       { name: 'SPFx', used: 'SharePoint Framework web parts and extensions.' },
-      { name: 'Teams', used: 'Microsoft Teams integration in Penthara’s internal workforce platform.' },
+      { name: 'Teams', used: 'Microsoft Teams integration in Voyager, Penthara’s workforce platform.' },
     ],
   },
   {

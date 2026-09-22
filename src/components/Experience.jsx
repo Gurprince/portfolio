@@ -48,7 +48,7 @@ function Role({ role, open, onToggle }) {
               <span key={slug}>
                 {i > 0 && ', '}
                 <a href={`/work/${slug}`} onClick={(e) => { e.preventDefault(); go(`/work/${slug}`); }}>
-                  {caseBySlug(slug).client === 'Penthara Technologies' ? 'workforce platform' : caseBySlug(slug).client}
+                  {caseBySlug(slug).client}
                 </a>
               </span>
             ))}

@@ -10,7 +10,7 @@ export default function ClientWork() {
     <section className="cw" id="cases">
       <div className="section-head">
         <Reveal as="h2" className="section-title">Client work</Reveal>
-        <Reveal as="p" className="section-sub" delay={0.1}>Three problems I solved at Penthara Technologies. Open one for the full story.</Reveal>
+        <Reveal as="p" className="section-sub" delay={0.1}>Three things I built at Penthara Technologies. Open one for the full story.</Reveal>
       </div>
 
       <Reveal as="ul" className="cw__grid" stagger={0.12}>
