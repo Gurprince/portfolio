@@ -113,9 +113,9 @@ story.append(entry('Full Stack Developer, CFZ Technologies', 'Mohali &nbsp;|&nbs
 ]))
 story.append(entry('Software Developer Intern, Penthara Technologies', 'Mohali &nbsp;|&nbsp; Oct 2025 – Jun 2026', [
     'Rebuilt a client reporting feature in React and PHP, cutting report generation from <b>24 hours to 3–7 seconds</b> '
-    '(~99.99% faster) for client Healthicity.',
+    '(~99.99% faster) for a healthcare client.',
     'Designed and deployed Azure Logic Apps and Power Automate flows that <b>eliminated manual document uploads</b> for '
-    'client Standish, filing SharePoint files into Azure Blob Storage in a client-named folder structure.',
+    'an enterprise client, filing SharePoint files into Azure Blob Storage in a client-named folder structure.',
     'Built <b>' + link('https://voyager.penthara.com', 'Voyager') + '</b> (voyager.penthara.com), a multi-tenant workforce '
     'platform in React and NestJS: workspaces, projects with tasks and subtasks, timesheets, leave, employee capacity '
     'tracking, and RAG and risk reports, with Teams integration and automated emails.',

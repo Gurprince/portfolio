@@ -8,7 +8,7 @@ const Logo = ({ name, x, y, size = 28 }) => (
   </g>
 );
 
-/* Healthicity: before vs after, drawn to scale */
+/* Reporting rebuild: before vs after, drawn to scale */
 export function BarsDiagram() {
   return (
     <div className="bars">
@@ -27,7 +27,7 @@ export function BarsDiagram() {
   );
 }
 
-/* Standish: SharePoint → automated flows → client-named Blob folders */
+/* Document automation: SharePoint → automated flows → client-named Blob folders */
 const FOLDERS = [
   { y: 52, label: '/client-a' },
   { y: 130, label: '/client-b' },
