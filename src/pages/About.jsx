@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import Marquee from '../components/Marquee';
+import NextPage from '../components/NextPage';
 import Experience from '../components/Experience';
 import { Skills, Credentials } from '../components/Skills';
 import useClock from '../hooks/useClock';
@@ -85,6 +86,9 @@ export default function About() {
       <Experience />
       <Skills />
       <Credentials />
+      <div className="page-end">
+        <NextPage to="/contact" label="Up next · Say hello" title={<>Get in <em>touch</em></>} sub="Email, phone, LinkedIn and GitHub" ghost="Hello" />
+      </div>
     </>
   );
 }
