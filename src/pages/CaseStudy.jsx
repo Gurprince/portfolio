@@ -71,8 +71,8 @@ export default function CaseStudy() {
 
   return (
     <article className="study" ref={root}>
-      <a className="study__back" href="/#cases" onClick={(e) => { e.preventDefault(); go('/', { scrollTo: '#cases' }); }}>
-        All client work
+      <a className="study__back" href="/case-studies" onClick={(e) => { e.preventDefault(); go('/case-studies'); }}>
+        All case studies
       </a>
 
       <div className="study__glow" aria-hidden="true" />

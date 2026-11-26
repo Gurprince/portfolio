@@ -3,15 +3,15 @@ import usePageTransition from '../hooks/usePageTransition';
 import { cases } from '../data/resume';
 
 /* Home: one calm card per case study; the full story lives on its own page */
-export default function ClientWork() {
+export default function ClientWork({ bare = false }) {
   const go = usePageTransition();
 
   return (
-    <section className="cw" id="cases">
-      <div className="section-head">
+    <section className={`cw${bare ? ' cw--bare' : ''}`} id="cases" aria-label={bare ? 'Case studies' : undefined}>
+      {!bare && <div className="section-head">
         <Reveal as="h2" className="section-title">Client <em>work</em><sup aria-hidden="true">({String(cases.length).padStart(2, '0')})</sup></Reveal>
         <Reveal as="p" className="section-sub" delay={0.1}>Three things I built at Penthara Technologies. Open one for the full story.</Reveal>
-      </div>
+      </div>}
 
       <Reveal
         as="ul"
