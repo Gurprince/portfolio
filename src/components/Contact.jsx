@@ -4,7 +4,8 @@ import RollText from './RollText';
 import useClock from '../hooks/useClock';
 import useMagnetic from '../hooks/useMagnetic';
 import { scrollToTarget } from '../hooks/useLenis';
-import { contact } from '../data/resume';
+import { cases, contact } from '../data/resume';
+import usePageTransition from '../hooks/usePageTransition';
 import useEmailDialog from '../hooks/useEmailDialog';
 
 export default function Contact() {
@@ -12,6 +13,7 @@ export default function Contact() {
   const big = useMagnetic(0.12);
   const root = useRef(null);
   const openEmail = useEmailDialog();
+  const go = usePageTransition();
 
   useLayoutEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
@@ -54,6 +56,32 @@ export default function Contact() {
           </a>
         ))}
       </div>
+      <nav className="contact__map" aria-label="Footer">
+        <div>
+          <p className="menu__label">Pages</p>
+          <ul>
+            {[['Home', '/'], ['Work', '/#cases', '#cases'], ['About', '/about']].map(([label, href, scrollTo]) => (
+              <li key={label}>
+                <a className="roll-host" href={href} onClick={(e) => { e.preventDefault(); go(href, { scrollTo }); }}>
+                  <RollText>{label}</RollText>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="menu__label">Case studies</p>
+          <ul>
+            {cases.map((c) => (
+              <li key={c.slug}>
+                <a className="roll-host" href={`/work/${c.slug}`} onClick={(e) => { e.preventDefault(); go(`/work/${c.slug}`); }}>
+                  <RollText>{c.title}</RollText>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
       <div className="contact__base">
         <p>© {new Date().getFullYear()} Gurprince Singh</p>
         <p>Mohali, <time>{time}</time> IST</p>

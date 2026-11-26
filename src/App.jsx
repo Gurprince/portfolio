@@ -20,7 +20,7 @@ export default function App() {
         <Cursor />
         <Grain />
         <Nav />
-        <main>
+        <main id="content" tabIndex={-1}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
