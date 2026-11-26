@@ -19,10 +19,15 @@ export default function CaseStudy() {
     if (c) document.title = `${c.client}: ${c.title} · Gurprince Singh`;
   }, [c]);
 
-  /* the diagram builds itself once it scrolls into view */
+  /* header rises in, then the diagram builds itself once it scrolls into view */
   useLayoutEffect(() => {
     if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const ctx = gsap.context(() => {
+      gsap.timeline({ delay: 0.2 })
+        .fromTo('.study__title-line > span', { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07 })
+        .fromTo(['.study__metric', '.study__facts > div'], { autoAlpha: 0, y: 24 },
+          { autoAlpha: 1, y: 0, duration: 0.8, ease: 'expo.out', stagger: 0.06 }, '-=0.7');
+
       const trigger = { trigger: '.study__visual', start: 'top 80%', once: true };
 
       if (document.querySelector('.bars__fill--before')) {
@@ -49,7 +54,20 @@ export default function CaseStudy() {
   if (!c) return <NotFound />;
 
   const Diagram = DIAGRAMS[c.diagram];
-  const next = cases[(cases.indexOf(c) + 1) % cases.length];
+  const index = cases.indexOf(c);
+  const next = cases[(index + 1) % cases.length];
+  const pad = (n) => String(n).padStart(2, '0');
+  /* last word of the title gets the serif accent; split into lines of up to 4 words for the mask reveal */
+  const words = c.title.split(' ');
+  const lines = [];
+  for (let i = 0; i < words.length; i += 4) lines.push(words.slice(i, i + 4));
+  const spot = (e) => {
+    const card = e.target.closest('li');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    card.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
 
   return (
     <article className="study" ref={root}>
@@ -57,34 +75,64 @@ export default function CaseStudy() {
         All client work
       </a>
 
+      <div className="study__glow" aria-hidden="true" />
       <header className="study__head">
-        <Reveal as="p" className="study__client">{c.client}<span>, {c.via}</span></Reveal>
-        <Reveal as="h1" className="study__title">{c.title}</Reveal>
-        <Reveal className="study__metric" delay={0.15}>
-          <span className="study__metric-value">{c.metric}</span>
-          <span className="study__metric-label">{c.metricLabel}</span>
-        </Reveal>
-        {c.live && (
-          <a className="study__live" href={c.live.url} target="_blank" rel="noopener noreferrer" data-cursor="Visit">
-            Visit {c.live.label}
-          </a>
-        )}
+        <p className="study__client">
+          <span className="study__case">Case {pad(index + 1)} / {pad(cases.length)}</span>
+          {c.client}<span>, {c.via}</span>
+        </p>
+        <h1 className="study__title" aria-label={c.title}>
+          {lines.map((line, li) => (
+            <span className="study__title-line" key={li} aria-hidden="true">
+              <span>
+                {line.map((w, wi) => {
+                  const last = li === lines.length - 1 && wi === line.length - 1;
+                  return <span key={wi}>{last ? <em>{w}</em> : w}{wi < line.length - 1 ? ' ' : ''}</span>;
+                })}
+              </span>
+            </span>
+          ))}
+        </h1>
+
+        <div className="study__summary">
+          <div className="study__metric">
+            <span className="study__metric-value">{c.metric}</span>
+            <span className="study__metric-label">{c.metricLabel}</span>
+            {c.live && (
+              <a className="study__live" href={c.live.url} target="_blank" rel="noopener noreferrer" data-cursor="Visit">
+                Visit {c.live.label}
+              </a>
+            )}
+          </div>
+          <dl className="study__facts">
+            <div><dt>Client</dt><dd>{c.client}</dd></div>
+            <div><dt>Built at</dt><dd>{c.via}</dd></div>
+            <div><dt>Stack</dt><dd>{c.stack.join(', ')}</dd></div>
+          </dl>
+        </div>
       </header>
 
-      <div className="study__visual"><Diagram /></div>
+      <figure className="study__figure">
+        <figcaption className="study__figcap"><span>Fig. {pad(index + 1)}</span> How it works</figcaption>
+        <div className="study__visual"><Diagram /></div>
+      </figure>
 
-      <Reveal as="dl" className="study__story" stagger={0.12}>
-        <div><dt>Problem</dt><dd>{c.problem}</dd></div>
-        <div><dt>What I built</dt><dd>{c.built}</dd></div>
-        <div className="study__result"><dt>Result</dt><dd>{c.result}</dd></div>
-      </Reveal>
+      <dl className="study__story">
+        {[['Problem', c.problem], ['What I built', c.built], ['Result', c.result]].map(([k, v], i) => (
+          <Reveal className={`study__row${i === 2 ? ' study__result' : ''}`} key={k}>
+            <dt><span>{pad(i + 1)}</span>{k}</dt>
+            <dd>{v}</dd>
+          </Reveal>
+        ))}
+      </dl>
 
       {c.features && (
         <section className="study__features">
-          <Reveal as="h2" className="study__features-title">What's inside</Reveal>
-          <Reveal as="ul" className="study__features-grid" stagger={0.06}>
-            {c.features.map((f) => (
+          <Reveal as="h2" className="study__features-title">What&apos;s <em>inside</em></Reveal>
+          <Reveal as="ul" className="study__features-grid" stagger={0.06} onPointerMove={spot}>
+            {c.features.map((f, i) => (
               <li key={f.name}>
+                <span className="study__feat-num">{pad(i + 1)}</span>
                 <h3>{f.name}</h3>
                 <p>{f.text}</p>
               </li>
@@ -105,10 +153,10 @@ export default function CaseStudy() {
       <a
         className="study__next"
         href={`/work/${next.slug}`}
-        data-cursor="Next"
         onClick={(e) => { e.preventDefault(); go(`/work/${next.slug}`); }}
       >
-        <span className="study__next-label">Next case study</span>
+        <span className="study__next-ghost" aria-hidden="true">{next.metric}</span>
+        <span className="study__next-label">Next case study · {pad(cases.indexOf(next) + 1)}</span>
         <span className="study__next-title">{next.title}</span>
         <span className="study__next-client">{next.client}</span>
       </a>
