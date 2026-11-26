@@ -37,33 +37,56 @@ export default function Hero() {
     return () => window.removeEventListener('resize', fit);
   }, []);
 
-  /* intro: veil lifts, letters blur-rise, then the rest of the hero settles in */
+  /* intro: letters blur-rise as the CSS loader (index.html) lifts, then the rest settles in */
   useLayoutEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-
-    if (introPlayed) {
-      gsap.set('.veil', { autoAlpha: 0 });
-      const ctx = gsap.context(() => {
-        gsap.fromTo('.hero__char',
-          { autoAlpha: 0, yPercent: 30, filter: 'blur(10px)' },
-          { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 1, ease: 'expo.out', stagger: 0.03, delay: 0.5 });
-      }, root);
-      return () => ctx.revert();
-    }
+    const first = !introPlayed;
+    introPlayed = true;
     const ctx = gsap.context(() => {
-      gsap.timeline({ delay: 0.1, onComplete: () => { introPlayed = true; } })
-        .to('.veil', { autoAlpha: 0, duration: 0.9, ease: 'power2.out' })
+      gsap.timeline({ delay: first ? 1.45 : 0.5 })
         .fromTo('.hero__char',
-          { autoAlpha: 0, yPercent: 40, filter: 'blur(14px)' },
-          { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out', stagger: 0.045 }, 0.3)
-        .fromTo(['.hero__foot', document.querySelector('.nav')], { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'expo.out' }, '-=0.6');
+          { autoAlpha: 0, yPercent: 50, filter: 'blur(12px)' },
+          { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out', stagger: 0.035 })
+        .fromTo(['.hero__meta', '.hero__foot', document.querySelector('.nav')],
+          { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'expo.out' }, '-=0.7');
     }, root);
     return () => ctx.revert();
   }, []);
 
+  /* scroll: letters drift up at uneven speeds as the hero leaves */
+  useLayoutEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const ctx = gsap.context(() => {
+      const st = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true };
+      gsap.fromTo('.hero__char', { y: 0 }, { y: (i) => -(30 + ((i * 47) % 140)), ease: 'none', scrollTrigger: st });
+      gsap.to('.hero__glow', { autoAlpha: 0, ease: 'none', scrollTrigger: st });
+    }, root);
+    return () => ctx.revert();
+  }, []);
+
+  /* amber light that trails the pointer across the hero */
+  useLayoutEffect(() => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
+    const el = root.current;
+    const p = { x: el.clientWidth * 0.7, y: el.clientHeight * 0.35 };
+    const paint = () => { el.style.setProperty('--mx', `${p.x}px`); el.style.setProperty('--my', `${p.y}px`); };
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      gsap.to(p, { x: e.clientX - r.left, y: e.clientY - r.top, duration: 1.2, ease: 'power3.out', overwrite: true, onUpdate: paint });
+    };
+    paint();
+    el.addEventListener('pointermove', onMove);
+    return () => el.removeEventListener('pointermove', onMove);
+  }, []);
+
   return (
     <section className="hero" id="top" ref={root}>
-      <div className="veil" aria-hidden="true" />
+      <div className="hero__glow" aria-hidden="true" />
+
+      <div className="hero__meta">
+        <p className="hero__status"><span className="hero__pulse" />Currently at CFZ Technologies</p>
+        <p className="hero__role">Web apps, Azure automations <em>&amp;</em> AI features</p>
+      </div>
 
       <h1 className="hero__name" ref={nameRef} aria-label="Gurprince Singh">
         <span className="hero__word" aria-hidden="true"><Chars word="Gurprince" /></span>
