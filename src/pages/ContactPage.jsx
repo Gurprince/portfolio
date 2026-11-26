@@ -1,11 +1,21 @@
 import { useEffect } from 'react';
 import PageHeader from '../components/PageHeader';
 import Reveal from '../components/Reveal';
+import NextPage from '../components/NextPage';
+import usePageTransition from '../hooks/usePageTransition';
 import useClock from '../hooks/useClock';
 import useEmailDialog from '../hooks/useEmailDialog';
 import { contact, roles } from '../data/resume';
 
 /* pointer-lit border on whichever card the pointer is over */
+/* what I take on, each backed by work on this site */
+const services = [
+  { name: 'Web apps', text: 'React front ends on NestJS, Node or PHP back ends, from the data model to the screens people use.', proof: 'Voyager workforce platform', to: '/work/penthara' },
+  { name: 'Automation', text: 'Azure Logic Apps and Power Automate flows that move files and data without anyone clicking.', proof: 'Zero manual uploads', to: '/work/document-automation' },
+  { name: 'Speed fixes', text: 'Slow reports and heavy features, rebuilt so people stop waiting on them.', proof: '24 hours to 7 seconds', to: '/work/reporting' },
+  { name: 'AI features', text: 'Semantic search on a vector database and custom MCP servers for context-aware features.', proof: 'AI search in Voyager', to: '/work/penthara' },
+];
+
 const spot = (e) => {
   const card = e.target.closest('.reach__card');
   if (!card) return;
@@ -17,6 +27,7 @@ const spot = (e) => {
 export default function ContactPage() {
   const time = useClock();
   const openEmail = useEmailDialog();
+  const go = usePageTransition();
 
   useEffect(() => {
     document.title = 'Contact · Gurprince Singh';
@@ -67,6 +78,27 @@ export default function ContactPage() {
           <div><dt>Good fit</dt><dd>Web apps, Azure and Power Platform automations, AI features</dd></div>
         </Reveal>
       </section>
+
+      <section className="help">
+        <div className="section-head">
+          <Reveal as="h2" className="section-title">What I can <em>help</em> with</Reveal>
+          <Reveal as="p" className="section-sub" delay={0.1}>Each one links to work I&apos;ve already shipped.</Reveal>
+        </div>
+        <Reveal as="ol" className="help__list" stagger={0.08}>
+          {services.map((s, i) => (
+            <li key={s.name}>
+              <span className="help__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="help__name">{s.name}</h3>
+              <p className="help__text">{s.text}</p>
+              <a className="help__proof" href={s.to} onClick={(e) => { e.preventDefault(); go(s.to); }}>{s.proof}</a>
+            </li>
+          ))}
+        </Reveal>
+      </section>
+
+      <div className="page-end">
+        <NextPage to="/work" label="Up next · While you're here" title={<>Selected <em>work</em></>} sub="Products, a granted patent and live client sites" ghost="Work" />
+      </div>
     </>
   );
 }
