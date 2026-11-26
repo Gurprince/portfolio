@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import RollText from './RollText';
 import useClock from '../hooks/useClock';
 import usePageTransition from '../hooks/usePageTransition';
-import { scrollToTarget, setScrollLocked } from '../hooks/useLenis';
+import { setScrollLocked } from '../hooks/useLenis';
 import { cases } from '../data/resume';
 
 export default function Nav() {
@@ -15,11 +15,12 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
 
-  /* [label, href, what the click does, is this the current page] — Contact is the footer, on every page */
+  /* [label, href, what the click does, is this the current page]; case study pages live under /work/:slug */
   const links = [
-    ['Work', '/#cases', () => go('/', { scrollTo: '#cases' }), pathname.startsWith('/work')],
+    ['Work', '/work', () => go('/work'), pathname === '/work'],
+    ['Case studies', '/case-studies', () => go('/case-studies'), pathname === '/case-studies' || pathname.startsWith('/work/')],
     ['About', '/about', () => go('/about'), pathname === '/about'],
-    ['Contact', '#contact', () => scrollToTarget('#contact'), false],
+    ['Contact', '/contact', () => go('/contact'), pathname === '/contact'],
   ];
 
   /* tuck the bar away while scrolling down, bring it back on any scroll up */
@@ -99,7 +100,7 @@ export default function Nav() {
             {cases.map((c, i) => {
               const to = `/work/${c.slug}`;
               return (
-                <li key={c.slug} style={{ '--i': i + 4 }}>
+                <li key={c.slug} style={{ '--i': i + 5 }}>
                   <a href={to} aria-current={pathname === to ? 'page' : undefined} onClick={(e) => follow(e, () => go(to))}>
                     <span>{c.client}</span>{c.title}
                   </a>

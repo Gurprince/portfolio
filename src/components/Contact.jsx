@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import RollText from './RollText';
 import useClock from '../hooks/useClock';
@@ -14,6 +15,7 @@ export default function Contact() {
   const root = useRef(null);
   const openEmail = useEmailDialog();
   const go = usePageTransition();
+  const onContactPage = useLocation().pathname === '/contact';
 
   useLayoutEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
@@ -26,7 +28,7 @@ export default function Contact() {
         });
     }, root);
     return () => ctx.revert();
-  }, []);
+  }, [onContactPage]);
 
   const links = [
     [`mailto:${contact.email}`, contact.email],
@@ -36,7 +38,8 @@ export default function Contact() {
   ];
 
   return (
-    <footer className="contact" id="contact" ref={root}>
+    <footer className={`contact${onContactPage ? ' contact--slim' : ''}`} id="contact" ref={root}>
+      {!onContactPage && (<>
       <p className="contact__lead">Have a slow report, a manual process, or a product to build?</p>
       <a ref={big} className="contact__big" href={`mailto:${contact.email}`} data-cursor="Write" aria-label="Email me" onClick={openEmail}>
         {[..."Let's talk"].map((c, i) => (
@@ -56,13 +59,14 @@ export default function Contact() {
           </a>
         ))}
       </div>
+      </>)}
       <nav className="contact__map" aria-label="Footer">
         <div>
           <p className="menu__label">Pages</p>
           <ul>
-            {[['Home', '/'], ['Work', '/#cases', '#cases'], ['About', '/about']].map(([label, href, scrollTo]) => (
+            {[['Home', '/'], ['Work', '/work'], ['Case studies', '/case-studies'], ['About', '/about'], ['Contact', '/contact']].map(([label, href]) => (
               <li key={label}>
-                <a className="roll-host" href={href} onClick={(e) => { e.preventDefault(); go(href, { scrollTo }); }}>
+                <a className="roll-host" href={href} onClick={(e) => { e.preventDefault(); go(href); }}>
                   <RollText>{label}</RollText>
                 </a>
               </li>
