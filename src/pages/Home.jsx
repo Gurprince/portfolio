@@ -4,6 +4,8 @@ import Numbers from '../components/Numbers';
 import ClientWork from '../components/ClientWork';
 import Work from '../components/Work';
 import Reveal from '../components/Reveal';
+import ScrubText from '../components/ScrubText';
+import Marquee from '../components/Marquee';
 import usePageTransition from '../hooks/usePageTransition';
 
 export default function Home() {
@@ -19,11 +21,12 @@ export default function Home() {
       <Numbers />
       <ClientWork />
       <Work />
+      <Marquee />
       <section className="bridge">
-        <Reveal as="p" className="bridge__text">
+        <ScrubText className="bridge__text">
           Right now I'm a Full Stack Developer at CFZ Technologies in Mohali. Before that, I shipped client work at
           Penthara Technologies, Logicsoft International and Speedum Technology.
-        </Reveal>
+        </ScrubText>
         <Reveal delay={0.15}>
           <a className="btn btn--ghost" href="/about" onClick={(e) => { e.preventDefault(); go('/about'); }}>
             See my experience and skills

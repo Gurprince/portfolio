@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Gurprince Singh, full stack developer in Mohali, Punjab. React, NestJS, PHP, Azure, Power Platform and AI integrations." />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#0b0b0a" />
     <title>Gurprince Singh · Full Stack Developer</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -25,11 +25,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Geist:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* first-load loader: pure CSS so it paints before the bundle and plays exactly once */
+      @property --n { syntax: '<integer>'; inherits: false; initial-value: 0; }
+      .veil {
+        position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden;
+        background: #0b0b0a; color: #e7e8ec; font-family: 'Geist', system-ui, sans-serif;
+        animation: veil-up 1s cubic-bezier(0.87, 0, 0.13, 1) 1.1s forwards;
+      }
+      .veil__inner {
+        position: absolute; left: clamp(16px, 4vw, 56px); right: clamp(16px, 4vw, 56px); bottom: clamp(16px, 4vw, 56px);
+        display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 20px;
+        animation: veil-inner 1s cubic-bezier(0.87, 0, 0.13, 1) 1.1s forwards;
+      }
+      .veil__name { font-size: clamp(15px, 1.3vw, 18px); color: rgba(231, 232, 236, 0.58); }
+      .veil__name em { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.2em; color: #ffd59e; }
+      .veil__count {
+        font-family: 'Bricolage Grotesque', 'Arial Narrow', sans-serif; font-weight: 800; font-variation-settings: 'wdth' 75;
+        font-size: clamp(72px, 12vw, 180px); line-height: 0.8; font-variant-numeric: tabular-nums;
+        counter-reset: n var(--n); animation: veil-count 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+      }
+      .veil__count::after { content: counter(n); }
+      .veil__line {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #f4a340;
+        transform-origin: left; transform: scaleX(0); animation: veil-line 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+      }
+      @keyframes veil-count { to { --n: 100; } }
+      @keyframes veil-line { to { transform: scaleX(1); } }
+      @keyframes veil-up { to { transform: translateY(-100%); visibility: hidden; } }
+      @keyframes veil-inner { to { transform: translateY(60%); } }
+      @media (prefers-reduced-motion: reduce) { .veil { display: none; } }
+    </style>
   </head>
   <body>
+    <div class="veil" aria-hidden="true">
+      <div class="veil__inner">
+        <span class="veil__name">Gurprince Singh <em>portfolio</em></span>
+        <span class="veil__count"></span>
+        <span class="veil__line"></span>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

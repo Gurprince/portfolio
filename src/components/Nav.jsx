@@ -11,6 +11,7 @@ export default function Nav() {
   const go = usePageTransition();
   const { pathname } = useLocation();
   const menu = useRef(null);
+  const progress = useRef(null);
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
 
@@ -28,7 +29,10 @@ export default function Nav() {
       const y = window.scrollY;
       setHidden(y > 160 && y > last);
       last = y;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
     };
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -53,6 +57,7 @@ export default function Nav() {
   return (
     <>
       <a className="skip" href="#content">Skip to content</a>
+      <div className="progress" aria-hidden="true"><span ref={progress} /></div>
       <header className={`nav${hidden && !open ? ' is-hidden' : ''}`}>
         <a
           className="nav__mark roll-host"

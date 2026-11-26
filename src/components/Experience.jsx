@@ -78,7 +78,7 @@ export default function Experience() {
   return (
     <section className="exp" id="experience">
       <div className="section-head">
-        <Reveal as="h2" className="section-title">Experience</Reveal>
+        <Reveal as="h2" className="section-title">Where I've <em>worked</em></Reveal>
         <Reveal as="p" className="section-sub" delay={0.1}>Open a role to see what I shipped there.</Reveal>
       </div>
       <div className="timeline">

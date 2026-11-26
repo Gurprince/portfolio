@@ -67,7 +67,7 @@ export function Skills() {
   return (
     <section className="skills" id="skills">
       <div className="section-head">
-        <Reveal as="h2" className="section-title">What I work with</Reveal>
+        <Reveal as="h2" className="section-title">What I work <em>with</em></Reveal>
         <Reveal as="p" className="section-sub" delay={0.1}>Pick an area, then a tool, to see where I've used it.</Reveal>
       </div>
 
@@ -86,7 +86,7 @@ export function Skills() {
               className="explorer__tab"
               onClick={() => selectGroup(i)}
             >
-              <span>{g.group}</span>
+              <span><span className="explorer__num">{String(i + 1).padStart(2, '0')}</span>{g.group}</span>
               <span className="explorer__count">{g.items.length}</span>
             </button>
           ))}
@@ -103,6 +103,11 @@ export function Skills() {
                   onMouseEnter={() => setSkillIdx(i)}
                   onFocus={() => setSkillIdx(i)}
                   onClick={() => setSkillIdx(i)}
+                  onPointerMove={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+                  }}
                 >
                   <span className="tile__logo"><img src={logoFor(item.name)} alt="" /></span>
                   <span className="tile__name">{item.name}</span>
@@ -111,12 +116,21 @@ export function Skills() {
             ))}
           </ul>
 
-          <div className="explorer__detail" aria-live="polite">
-            <span className="explorer__detail-logo" key={`logo-${active.name}`}><img src={logoFor(active.name)} alt="" /></span>
-            <div key={active.name} className="explorer__detail-text">
-              <h3 className="explorer__detail-name">{active.name}</h3>
-              <p className="explorer__detail-used">{active.used}</p>
-            </div>
+        </div>
+
+        <div className="explorer__detail" aria-live="polite">
+          <span className="explorer__detail-mark" key={`mark-${active.name}`} aria-hidden="true">
+            {String(group.items.indexOf(active) + 1).padStart(2, '0')}
+          </span>
+          <p className="explorer__detail-meta">
+            <span>{group.group}</span>
+            <span>{String(group.items.indexOf(active) + 1).padStart(2, '0')} / {String(group.items.length).padStart(2, '0')}</span>
+          </p>
+          <span className="explorer__detail-logo" key={`logo-${active.name}`}><img src={logoFor(active.name)} alt="" /></span>
+          <div key={active.name} className="explorer__detail-text">
+            <h3 className="explorer__detail-name">{active.name}</h3>
+            <p className="explorer__detail-label">Where I&apos;ve used it</p>
+            <p className="explorer__detail-used">{active.used}</p>
           </div>
         </div>
       </Reveal>

@@ -40,7 +40,7 @@ export default function Contact() {
       <p className="contact__lead">Have a slow report, a manual process, or a product to build?</p>
       <a ref={big} className="contact__big" href={`mailto:${contact.email}`} data-cursor="Write" aria-label="Email me" onClick={openEmail}>
         {[..."Let's talk"].map((c, i) => (
-          <span className="contact__char" key={i} aria-hidden="true">{c === ' ' ? ' ' : c}</span>
+          <span className={`contact__char${i > 5 ? ' contact__char--serif' : ''}`} key={i} aria-hidden="true">{c === ' ' ? ' ' : c}</span>
         ))}
       </a>
       <div className="contact__grid">

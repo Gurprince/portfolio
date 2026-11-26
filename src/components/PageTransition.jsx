@@ -16,7 +16,7 @@ export default function PageTransition({ children }) {
   const cover = useRef(null);
   const label = useRef(null);
   const busy = useRef(false);
-  const first = useRef(true);
+  const shown = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,10 +40,11 @@ export default function PageTransition({ children }) {
 
   /* new page is in: jump scroll, then lift the cover */
   useLayoutEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    // skip the initial page load (StrictMode re-runs this effect for the same key); only real navigations wipe
+    if (shown.current === location.key) return;
+    const initial = shown.current === null;
+    shown.current = location.key;
+    if (initial) return;
     const target = location.state?.scrollTo;
     scrollToTop();
 
